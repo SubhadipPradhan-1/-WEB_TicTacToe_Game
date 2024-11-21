@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            text-align: center;
+            background-color: cornflowerblue;
+        }
+        h1{
+            color: black;
+        }
+        #contener{
+            height: 60vmin;
+            width: 60vmin;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            margin: auto;
+            gap:1.5vmin;
+            margin-top: 60px;
+        }
+        .toe_box{
+            height: 18vmin;
+            width: 18vmin;
+            border-radius :8px;
+            border: none;
+            font-size: 8vmin;
+            color: rgba(4, 4, 4, 0.911);
+            background-color:blueviolet;
+            }
+            #new_game{
+                height: 8vmin;
+                width: 18vmin;
+                background-color: antiquewhite;
+                color: blue;
+            }
+            #winner{
+                color:brown;
+                background-color: blanchedalmond;
+                font-size: 25px;
+                height: 40px;
+                width: 200px;
+                margin: auto;
+                margin-top: 20px;
+                justify-content: center;
+            }
+    </style>
+</head>
+<body>
+    <h1>Tic Tac Toe Game</h1>
+    <button id="new_game">New game</button>
+    <div id="winner"><b><i>Result</i></b></div>
+    <div id="contener">
+    <button name="bt1" class="toe_box"></button>
+    <button name="bt1" class="toe_box"></button>
+    <button  name="bt1" class="toe_box"></button>
+    <button  name="bt1" class="toe_box"></button>
+    <button name="bt1" class="toe_box"></button>
+    <button name="bt1" class="toe_box"></button>
+    <button name="bt1" class="toe_box"></button>
+    <button name="bt1" class="toe_box"></button>
+    <button name="bt1" class="toe_box"></button>
+    </div>
+    <script>
+        let acess_box=document.querySelectorAll(".toe_box");
+        let reset_game=document.querySelector("#new_game");
+        let winning_man=document.querySelector("#winner");
+        let mode="X";
+        let winning_condition =[
+            [0,1,2],
+            [0,3,6],
+            [0,4,8],
+            [1,4,7],
+            [2,5,8],
+            [2,4,6],
+            [3,4,5],
+            [6,7,8]
+        ];
+        // check which mode is X or O
+        acess_box.forEach((box)=>{ 
+        box.addEventListener("click",()=>{
+                if(mode==="X"){
+                    box.innerText=("O");
+                    mode="O";
+                }
+                else{
+                    box.innerText=("X");
+                    mode="X";
+                } 
+                // console.log("hi subha");
+                
+        box.disabled=true;
+        check_pattern();
+        })
+    })
+    // when one is win then disable
+    let disablebox=()=>{
+        for (let box of acess_box){
+            box.disabled=true;
+        }
+    }
+    let enable=()=>{ 
+        for(let box of acess_box){
+            box.disabled=false;
+            box.innerText="";
+        }
+    }
+
+    // show winner 
+    let showwinner =(position1)=>{
+        winning_man.innerText=`Game Winner is ${position1}`;
+        disablebox();
+    }
+    // main code
+    const check_pattern=()=>{
+        for(i of winning_condition){
+            let position1=acess_box[i[0]].innerText;
+            let position2=acess_box[i[1]].innerText;
+            let position3=acess_box[i[2]].innerText;
+            if(position1 !="" && position2 !="" && position3 !=""){
+                if(position1 === position2 && position2 === position3){
+                    console.log(" yes i am win");
+                    showwinner(position1);
+                }
+            }
+        }
+    }
+    reset_game.addEventListener("click",enable);
+    
+    </script>
+</body>
+</html>
